@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# strict mode http://redsymbol.net/articles/unofficial-bash-strict-mode/
+set -euo pipefail
+IFS=$'\n\t'
+
+# allow user override on docker start
+if [[ $UID != "33" ]]; then
+	usermod -u $UID $IMAGE_USER
+fi
+if [[ $GID != "33" ]]; then
+	usermod -g $GID $IMAGE_USER
+fi
+
+# set permissions so that we have access to volumes
+IMAGE_CHOWN_VOLUME=${IMAGE_CHOWN_VOLUME:-"no"}
+if [[ $IMAGE_CHOWN_VOLUME == "yes" ]]; then
+	chown -R $IMAGE_USER:$IMAGE_GROUP /srv/www;
+fi
+
+gosu $IMAGE_USER /usr/local/bin/bitcoind $@
