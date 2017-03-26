@@ -33,12 +33,7 @@ You can easily override the user/group used by the image using environment varia
 bitcoin-unlimited:
   container_name: node
   hostname: node
-  image: mgcrea/node:6
-  environment:
-    - IMAGE_USER=www-data
-    - IMAGE_GROUP=www-data
-    - UID=33
-    - GID=33
+  image: mgcrea/bitcoin-unlimited:1
   ports:
     - "8333:8333"
   volumes:

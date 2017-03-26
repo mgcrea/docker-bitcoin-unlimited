@@ -1,9 +1,9 @@
 # https://docs.docker.com/compose/yml/
 
 bitcoin-unlimited:
-  container_name: node
-  hostname: node
-  image: mgcrea/node:6
+  container_name: bitcoin-unlimited
+  hostname: bitcoin-unlimited
+  image: mgcrea/bitcoin-unlimited:1
   environment:
     - IMAGE_USER=www-data
     - IMAGE_GROUP=www-data
