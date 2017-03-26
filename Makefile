@@ -6,10 +6,10 @@ BASE_IMAGE := ubuntu:16.04
 all: build
 
 run:
-	@docker run --privileged --rm --net=host -v `pwd`/data:/var/bitcoin -it ${DOCKER_IMAGE}:latest
+	@docker run --rm --volume `pwd`/data:/var/bitcoin -it ${DOCKER_IMAGE}:latest
 
 bash:
-	@docker run --privileged --rm --net=host -it ${DOCKER_IMAGE}:latest /bin/bash
+	@docker run --rm -it ${DOCKER_IMAGE}:latest /bin/bash
 
 build:
 	@docker build --build-arg IMAGE_VERSION=${IMAGE_VERSION} --build-arg IMAGE_VERSION_HASH=${IMAGE_VERSION_HASH} --tag=${DOCKER_IMAGE}:latest .
@@ -26,6 +26,3 @@ release: rebuild
 
 push:
 	@scripts/push.sh ${DOCKER_IMAGE} ${IMAGE_VERSION}
-
-test:
-	@docker run --rm --entrypoint /bin/bash -it ${DOCKER_IMAGE}:latest
